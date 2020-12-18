@@ -1,0 +1,33 @@
+
+{
+    "mturk_env_config": {
+        "reward": "0.01",
+        "sandbox_env": true,
+        "aws_access_key_id": "AKIAJVSBCIZ55AXTDJQA",                             
+        "aws_secret_access_key": "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"     
+    },
+
+    "worker_config": {
+        "worker_requirements": [{
+            "QualificationTypeId": "000000000000000000L0",
+            "Comparator": "GreaterThanOrEqualTo",
+            "IntegerValues": [80],
+            "RequiredToPreview": true
+        }]
+    },
+
+    "hit_config": {
+        "Title": "Answer a simple question",
+        "Keywords": "question, answer, research",
+        "Description": "Answer a simple question. Created from mturk-code-samples.",
+        "MaxAssignments": 3,
+        "LifetimeInSeconds": 600,
+        "AssignmentDurationInSeconds": 600
+    },
+    
+    "save_files": {
+        "save_type": "json",
+        "save_dir": "./results/"
+    }
+}
+

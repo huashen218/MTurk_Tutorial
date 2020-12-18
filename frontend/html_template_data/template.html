@@ -1,0 +1,542 @@
+<!-- The following snippet enables the 'responsive' behavior on smaller screens -->
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<section class="container" id="Sentiment"><!-- Instructions (collapsible) -->
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <div class="panel panel-primary"><!-- WARNING: the ids "collapseTrigger" and "instructionBody" are being used to enable expand/collapse feature --><a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Tweet Stance Instructions</strong>  </a>
+      <div class="panel-body" id="instructionBody"><strong>Pick the stance based on the following criterion:</strong><br>If you have any questions about the task please contact me at <strong>szh277@psu.edu</strong> thanks!
+      <table class="table table-condensed table-striped table-responsive" id="instruct-table">
+        <tbody>
+        </tbody>
+        <colgroup>
+        <col class="col-xs-5 col-md-5" />
+        <col class="col-xs-5 col-md-5" />
+        </colgroup>
+        <!-- By explaining the sentiment scale, the accuracy of the answers may increase. -->
+        <tbody>
+          <tr>
+            <th>Stance</th>
+            <th>Guidance</th>
+          </tr>
+          <tr>
+            <td>This tweet <strong>strongly agrees</strong> with the question:<br>This tweet thinks climate change will harm people in the United States.</td>
+            <td>Select this if the item embodies stance that strongly agrees with the question.<br>For example, <i>&quot;Climate change is a national emergency.&quot;</i></td>
+          </tr>
+          <tr>
+            <td>This tweet has a <strong>neutral</strong> stance about the question:<br>This tweet thinks that climate change is happening.</td>
+            <td>Select this if the item does not embody any prticular stance about the question.<br> For example,<i>&quot;This is Miami, Florida right now. Some say it's God. Some say its global warming. Either way...&quot;</i></td>
+          </tr>
+          <tr>
+            <td>This tweet <strong>strongly disagrees</strong> with the question:<br>This tweet is worried about climate change.</td>
+            <td>Select this if the item embodies stance that strongly disagrees with the question.<br> For example, <i>&quot;It's freezing in New York-where the hell is global warming?&quot;</i></td>
+          </tr>
+          <tr>
+            <td>This tweet is <strong>not relevant</strong> to the question:<br> This tweet is worried about climate change.</td>
+            <td>Select this if the item embodies stance that is not relevant to the question.<br> For example, <i>&quot;A beautiful night to watch a sunset on the lake.&quot;</i></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End instructions --><!-- Categorization Layout -->
+
+<style type="text/css">
+#instructionBody {
+    padding-bottom: 5px;
+}
+
+#instruct-table {
+    margin-bottom: 5px;
+}
+
+.hashtag {
+color: #2394DD;
+font-weight: 400;
+}
+
+.block {
+  padding: 5px;
+  border: 4px solid red;
+  border-radius: 3px;
+  margin:2px;
+}
+
+/*.block:hover {
+  background: rgba(0, 0, 0, 0.3);
+}*/
+
+.block:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+input[type="radio"] {
+  cursor: pointer;
+}
+
+/*input[type="radio"]:checked{
+  margin-top: -5px;
+}*/
+
+.finished {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tweet-box{
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+</style>
+
+<div class="row" id="workContent">
+  <div class="col-xs-12 col-sm-6 content"><label>Tweet:</label>
+    <div class="well tweet-box">
+      <div style="font-size:16pt;">{{message}}</div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 content">
+
+    Stance expressed by the Tweet shown on the left:<br>&#8251 12 questions in total, please scroll down this column to finish all of the questions then hit the submit button to submit<br>
+    <form name="mturk_form" id="mturk_form" style = "height:350px; overflow-y:auto; padding: 5px; border: 1px solid rgba(0, 0, 0, 0.5); border-radius: 3px; margin:2px;">
+      <input type="hidden" name="tweet_id" value="{{tweetID}}">
+    <div class="form-group" style="margin-top: -5px; margin-bottom: 5px;"><label class="group-label"></label>    
+        
+      <div class="block">
+        <label for="q1">1. This tweet thinks that climate change is happening:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option6"> <i>Not relevant</i>
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q2">2. This tweet thinks that climate change is caused mostly by human activities (rather than by other factors, such as natural changes in the environment.) (Depends on 1) :</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions2" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions2" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions2" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions2" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions2" id="inlineRadio6" value="option6"> <i>Not relevant</i>
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q3">3. This tweet thinks that most scientists think climate change is happening:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions3" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions3" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions3" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions3" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions3" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions3" id="inlineRadio6" value="option6"> <i>Not relevant</i>
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q4">4. This tweet thinks climate change is affecting the weather in the United States:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions4" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions4" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions4" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions4" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions4" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions4" id="inlineRadio6" value="option6"> <i>Not relevant</i>
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q5">5. This tweet is worried about climate change:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions5" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions5" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions5" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions5" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions5" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions5" id="inlineRadio6" value="option6"> <i>Not relevant</i>
+        </label>
+      </div>
+      
+      <div class="block">
+        <label for="q6">6. This tweet thinks climate change will harm plants and animals:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions6" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions6" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions6" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions6" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions6" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions6" id="inlineRadio6" value="option6"> <i>Not relevant</i>
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q7">7. This tweet thinks climate change will harm future generations:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions7" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions7" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions7" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions7" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions7" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions7" id="inlineRadio6" value="option6"> Not relevant
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q8">8. This tweet thinks climate change will harm people in the United States:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions8" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions8" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions8" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions8" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions8" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions8" id="inlineRadio6" value="option6"> Not relevant
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q9">9. Owner of this tweet thinks climate change will harm him/her personally:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions9" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions9" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions9" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions9" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions9" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions9" id="inlineRadio6" value="option6"> Not relevant
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q10">10. This tweet thinks climate change is already harming people in the United States:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions10" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions10" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions10" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions10" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions10" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions10" id="inlineRadio6" value="option6"> Not relevant
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q11">11. This tweet thinks citizens themselves should do more to address climate change:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions11" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions11" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions11" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions11" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions11" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions11" id="inlineRadio6" value="option6"> Not relevant
+        </label>
+      </div>
+
+      <div class="block">
+        <label for="q12">12. This tweet thinks environmental protection is more important than economic growth:</label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions12" id="inlineRadio1" value="option1" required> Strongly disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions12" id="inlineRadio2" value="option2"> Disagree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions12" id="inlineRadio3" value="option3"> Neutral
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions12" id="inlineRadio4" value="option4"> Agree
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions12" id="inlineRadio5" value="option5"> Strongly agree
+        </label><br>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions12" id="inlineRadio6" value="option6"> Not relevant
+        </label>
+      </div>
+
+      <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block">
+    </form>
+  </div>
+</div>
+
+</section>
+
+
+
+
+<!-- End Categorization Layout --><!-- Please note that Bootstrap CSS/JS and JQuery are 3rd party libraries that may update their url/code at any time. Amazon Mechanical Turk (MTurk) is including these libraries as a default option for you, but is not responsible for any changes to the external libraries --><!-- External CSS references -->
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet" /><!-- Open internal style sheet -->
+<style type="text/css">
+
+#collapseTrigger{
+color:#fff;
+display: block;
+text-decoration: none;
+}
+
+#submitButton{
+white-space: normal;
+}
+#instructionBody table{
+font-size: 14px;
+margin-top: 10px;
+}
+#instructionBody table caption{
+text-align: left;
+padding: 0 0 5px 0;
+}
+#Inputs{
+display: block;
+}
+.content{
+margin-bottom: 15px;
+}
+.radio:first-of-type{
+margin-top: -5px;
+}
+.tweet-box.error{
+border: 1px solid red;
+}
+</style>
+<!-- Close internal style sheet --><!-- External JS references --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Open internal javascript --><script>
+$(document).ready(function() {
+// new functions
+$("input[type='radio']").click(function(evt) {
+  var element = $(evt.target);
+  element.parents(".block").addClass("finished");
+});
+
+
+
+/**
+ *  
+ *  gup(name) :: retrieves URL parameters if provided
+ *
+ *  Prepares the page for MTurk on load.
+ *  1. looks for a form element with id="mturk_form", and sets its METHOD / ACTION
+ *    1a. All that the task page needs to do is submit the form element when ready
+ *  2. disables form elements if HIT hasn't been accepted
+ *
+ **/
+
+// selector used by jquery to identify your form
+var form_selector = "#mturk_form";
+
+// function for getting URL parameters
+function gup(name) {
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.href);
+  if(results == null)
+    return "";
+  else return unescape(results[1]);
+}
+
+//  Turkify the captioning page.
+$(document).ready(function () {
+  // is assigntmentId is a URL parameter
+  if((aid = gup("assignmentId"))!="" && $(form_selector).length>0) {
+
+    // If the HIT hasn't been accepted yet, disabled the form fields.
+    if(aid == "ASSIGNMENT_ID_NOT_AVAILABLE") {
+      $('input,textarea,select').attr("DISABLED", "disabled");
+    }
+
+    // Add a new hidden input element with name="assignmentId" that
+    // with assignmentId as its value.
+    var aid_input = $("<input type='hidden' name='assignmentId' value='" + aid + "'>").appendTo($(form_selector));
+
+    // Make sure the submit form's method is POST
+    $(form_selector).attr('method', 'POST');
+
+    // Set the Action of the form to the provided "turkSubmitTo" field
+    if((submit_url=gup("turkSubmitTo"))!="") {
+      $(form_selector).attr('action', submit_url + '/mturk/externalSubmit');
+    }
+  }
+});
+
+// Instructions expand/collapse
+var content = $('#instructionBody');
+
+var trigger = $('#collapseTrigger');
+$("#checkbox1").on("change", function(){
+if($("#checkbox1:checked").length>0){//selected
+$("#Inputs").hide();
+}else{
+$("#Inputs").show();
+}
+});
+/*
+content.hide();
+$('.collapse-text').text('(Click to expand)');
+trigger.click(function(){
+content.toggle();
+var isVisible = content.is(':visible');
+if(isVisible){
+$('.collapse-text').text('(Click to collapse)');
+}else{
+$('.collapse-text').text('(Click to expand)');
+}
+});
+*/
+// end expand/collapse
+// highlight selected category
+var inputs = $("#Inputs input:radio");
+inputs.change(function(){
+inputs.parent().removeClass("btn-success");
+inputs.parent().addClass("btn-default");
+if($(this).is(":checked")){
+$(this).parent().removeClass("btn-default");
+$(this).parent().addClass("btn-success");
+}else{
+$(this).parent().removeClass("btn-success");
+$(this).parent().addClass("btn-default");
+}
+});
+// end highlight
+// get Tweet using oembed
+var url = $("#twitterOembed").val();
+if (url==""){
+$(".tweet-box").addClass("error");
+}
+else {
+$.ajax({
+url: "https://api.twitter.com/1/statuses/oembed.json?hide_thread=true&align=center&url="+url,
+dataType: "jsonp",
+success: function(data){
+$(".tweet-box").html(data.html);
+}
+});
+}
+// end get Tweet
+});
+</script><!-- Close internal javascript
