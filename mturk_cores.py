@@ -34,15 +34,15 @@ class MTurkManager:
         """
         environments = {
                 "live": {
-                    "endpoint": "https://mturk-requester.us-east-1.amazonaws.com",
-                    "preview": "https://mturk-requester.us-east-1.amazonaws.com",
-                    "manage": "https://requester.mturk.com/mturk/manageHITs",
-                    "reward": self.mturk_env_config['reward']
+                    "endpoint": "",
+                    "preview": "",
+                    "manage": "",
+                    "reward": 
                 },
                 "sandbox": {
-                    "endpoint": "https://mturk-requester-sandbox.us-east-1.amazonaws.com",,
-                    "preview": "https://workersandbox.mturk.com/mturk/preview",
-                    "manage": "https://requestersandbox.mturk.com/mturk/manageHITs",
+                    "endpoint": "",,
+                    "preview": "",
+                    "manage": "",
                     "reward": self.mturk_env_config['reward']
                 },
         }
